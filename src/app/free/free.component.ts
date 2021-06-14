@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-free',
@@ -14,8 +15,12 @@ export class FreeComponent implements OnInit {
   verified : boolean = false;
   isDisplayed : boolean = false;
   isDisplayedText : string = 'Likes are free only once per Email and Instagram ID combined. Only personal Instagram accounts are valid and account should be public!';
+  httpService : HttpService;
+  orderObject = { link : '' }
 
-  constructor() { }
+  constructor(httpService : HttpService) {
+    this.httpService = httpService;
+   }
 
   ngOnInit(): void {
     this.isDisplayed = true;
@@ -34,7 +39,9 @@ export class FreeComponent implements OnInit {
 
   sendOTP() {
     this.sendOTPMessage = 'OTP Sent';
-    this.OTP = 1234;
+    this.httpService.sendAndVerifyOTP(this.userDetailsForm.value.email).subscribe((response) => {
+      this.OTP = Number(response);
+    });
   }
 
   verifyOTP() {
@@ -47,6 +54,8 @@ export class FreeComponent implements OnInit {
   }
 
   submitUserDetails() {
+    this.orderObject.link = this.userDetailsForm.value.insta;
+    this.httpService.orderLikesForUser(this.orderObject);
     this.isDisplayedText = 'You will recieve 100 likes within 24 hours!'
     this.isDisplayed = true;
     setTimeout(() => {
