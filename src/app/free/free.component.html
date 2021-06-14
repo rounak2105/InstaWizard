@@ -1,0 +1,46 @@
+<br>
+<form [formGroup]="userDetailsForm">
+    <div class="input-group mb-3" style="width: 70%; left: 15%; right: 15%;">
+        <span class="input-group-text" id="basic-addon1">⛄</span>
+        <div class="input-group-prepend">
+        </div>
+        <input type="text" class="form-control" placeholder="Name" aria-label="Username" aria-describedby="basic-addon1" formControlName="name">
+    </div>
+  
+    <div class="input-group mb-3" style="width: 70%; left: 15%; right: 15%;">
+        <span class="input-group-text" id="basic-addon1">📧</span>
+        <input type="text" class="form-control" placeholder="Gmail" aria-label="Recipient's username" aria-describedby="basic-addon2" formControlName="email">
+        <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" (click)="sendOTP()">{{ sendOTPMessage }}</button>
+        </div>
+    </div>
+
+    <div class="input-group mb-3" style="width: 70%; left: 15%; right: 15%;">
+        <span class="input-group-text" id="basic-addon1">💫</span>
+        <input type="text" class="form-control" placeholder="Enter OTP" aria-label="Recipient's username" aria-describedby="basic-addon2" formControlName="otp">
+        <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" (click)="verifyOTP()">{{ verifyOTPMessage }}</button>
+        </div>
+    </div>
+
+    <div *ngIf="verified" class="hidden">
+        <div class="input-group mb-3" style="width: 70%; left: 15%; right: 15%;">
+            <span class="input-group-text" id="basic-addon1">📱</span>
+            <input type="text" class="form-control" placeholder="Instagram ID" aria-label="Username" aria-describedby="basic-addon1" formControlName="phone">
+          </div>
+        
+        <div class="input-group mb-3" style="width: 70%; left: 15%; right: 15%;">
+            <span class="input-group-text" id="basic-addon1">📎</span>
+            <input type="text" class="form-control" placeholder="Instagram Post Link" aria-label="Username" aria-describedby="basic-addon1" formControlName="insta">
+        </div>
+        
+        <button type="button" class="btn btn-success" style="width:70%; margin-left: 15%; margin-right: 15%;" (click)="submitUserDetails()">Submit</button>
+        
+    </div>
+
+    <div *ngIf="isDisplayed" class="alert alert-primary fixed-bottom" role="alert">
+        {{ isDisplayedText }}
+    </div>
+
+</form>
+  
